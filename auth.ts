@@ -1,23 +1,23 @@
 import NextAuth, { AuthError } from 'next-auth';
 import { headers } from 'next/headers';
 import authConfig from './auth.config';
+import { NextRequest } from 'next/server';
+import GitHub from 'next-auth/providers/github';
 
 export const {
   handlers: { GET, POST },
   auth,
   signIn,
   signOut,
-} = NextAuth(() => {
+  unstable_update: update,
+} = NextAuth(async () => {
   const headersList = headers();
   const protocol = headersList.get('x-forwarded-proto');
   const host = headersList.get('host');
-  const REDIRECT_URL =
-    protocol && host
-      ? `https://${host}/api/auth`
-      : 'https://localhost:3000/api/auth';
-  console.log('NEXT AUTH : ', REDIRECT_URL, headersList);
+
   return {
     ...authConfig,
+
     events: {
       async signIn({ user, profile, account }) {
         console.log('SIGN IN EVENT: ', { user, profile, account });

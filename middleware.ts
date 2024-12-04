@@ -28,7 +28,11 @@ export default auth((req) => {
   if (nextUrl.pathname.startsWith('/api/auth/')) {
     return;
   }
-  if (subdomain && subdomain !== 'localhost:3000') {
+  if (
+    subdomain &&
+    subdomain !== 'localhost:3000' &&
+    !nextUrl.pathname.startsWith(`/${subdomain}`)
+  ) {
     console.log(subdomain);
     // Append subdomain to the pathname to match app/[domain]
     url.pathname = `/${subdomain}${url.pathname}`;

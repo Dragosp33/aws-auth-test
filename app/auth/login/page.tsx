@@ -6,7 +6,17 @@ const page = () => {
   return (
     <div className='flex w-[300px]'>
       <button onClick={() => signIn('google')}>Google</button>
-      <button onClick={() => signIn('github')}>Github</button>
+      <button
+        onClick={() =>
+          signIn(
+            'github' /*{
+            redirectTo: 'http://localhost:3000/api/auth/callback/github',
+          }*/
+          )
+        }
+      >
+        Github
+      </button>
     </div>
   );
 };
